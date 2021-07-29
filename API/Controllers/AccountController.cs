@@ -21,7 +21,7 @@ namespace API.Controllers
             _service = service;
         }
 
-        [HttpPost("register")]
+        [HttpPost("{register}")]
         public async Task<ActionResult<UserDto>> Register(RegiserDto registerDto)
         {
             using var hmac = new HMACSHA512();
