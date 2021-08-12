@@ -1,4 +1,15 @@
 .navbar-brand, .dropdown-toggle, .dropdown-item
 {
+    text-decoration: none !important; 
     cursor:pointer
+}
+.navbar-brand, .dropdown-toggle, .dropdown-item:hover
+{
+    text-decoration: none !important;
+    
+
+}
+.dropdown-divider
+{
+    background-color: #fffff4;
 }
