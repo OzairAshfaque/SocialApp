@@ -23,7 +23,9 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
+           // var usr = await _context.Users.ToListAsync();
            
+            //return Ok(usr.Select(x=>x.UserName).Where(x=>x=="p"));//
             return await _context.Users.ToListAsync();
         }
         [Authorize]

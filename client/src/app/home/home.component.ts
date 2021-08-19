@@ -26,6 +26,8 @@ export class HomeComponent implements OnInit {
     this.http.get("https://localhost:5001/api/users").subscribe(response =>
     {
       this.users = response;
+
+
       console.log(this.users);
     },error=>
     {

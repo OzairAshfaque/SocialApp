@@ -6,7 +6,9 @@ import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+   
+  ],
   imports: [
     CommonModule,
     BsDropdownModule.forRoot(),
