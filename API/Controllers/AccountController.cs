@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
@@ -42,6 +43,7 @@ namespace API.Controllers
             };
         }
 
+        
          [HttpPost("login")]
          public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
          {
@@ -65,11 +67,30 @@ namespace API.Controllers
             };
              
          }
+         [HttpGet("check")]
+         public async Task<ActionResult> jsonCheckData()
+         {
+            var userData = await System.IO.File.ReadAllTextAsync("Data/UserSeedData.json");
+           
+             var data = Seed.SeedUsers(_context).ToString();
+                 var users = JsonSerializer.Deserialize<List<AppUser>>(userData);
+                 foreach(var user in users)
+                 {
+                     using var hmac = new HMACSHA512();
+                     user.UserName = user.UserName.ToLower();
+                     user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("password"));
+                     user.PasswordSalt = hmac.Key;
+                     return Ok(user);
+                 }
+          
 
-        private async Task<bool> UserExists(string username)
+             return Ok(users);
+         }
+
+        private async Task<bool> UserExists(string username )
         {
             return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
-      
+
     }
 }
