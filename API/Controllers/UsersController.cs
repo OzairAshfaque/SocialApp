@@ -31,11 +31,12 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
             
-           var users = await _repository.GetUsersAsync();
-           var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
+        //    var users = await _repository.GetUsersAsync();
+        //    var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
+           var user = await _repository.GetMembersAsync();
           
 
-            return Ok(usersToReturn);
+            return Ok(user);
         }
         
 
@@ -47,8 +48,8 @@ namespace API.Controllers
           // return _context.Users.FindAsync(id);
         // await _context.Users.Include(p=>p.Photos).Where(x=>x.Id==id).FirstOrDefaultAsync(x=>x.Id==id);
             //var user = await _repository.GetUserByUsernameAsync(username);
-            var user = await _repository.GetMemberAsync(username);
-            return user;
+            
+            return  await _repository.GetMemberAsync(username);
         }
 
       
