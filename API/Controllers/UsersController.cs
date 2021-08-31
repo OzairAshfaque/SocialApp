@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Controllers;
 using API.Interfaces;
+using AutoMapper;
 
 namespace API.Controllers
 {
@@ -16,55 +17,41 @@ namespace API.Controllers
     [Authorize]
     public class UsersController:BaseApiController
     {
-
-        private readonly DataContext _context;
         private readonly IUserRepository _repository;
-        public UsersController(DataContext context, IUserRepository repository)
+        private readonly IMapper _mapper;
+        public UsersController(IUserRepository repository, IMapper mapper)
         {
-            _context = context;
+       
             _repository = repository;
+            _mapper = mapper;
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
             
-           // var usr = await _context.Users.ToListAsync();
-           
-            //return Ok(usr.Select(x=>x.UserName).Where(x=>x=="p"));//
            var users = await _repository.GetUsersAsync();
-            return Ok(users);//await _context.Users.ToListAsync();
+           var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
+          
+
+            return Ok(usersToReturn);
         }
         
-     /*   [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUsersById(int id)
-        {
-          // return _context.Users.FindAsync(id);
-          // await _context.Users.Include(p=>p.Photos).Where(x=>x.Id==id).FirstOrDefaultAsync(x=>x.Id==id);
-          return await _repository.GetUserByIdAsync(id);
-        }
-        */
+
 
                 
         [HttpGet("{username}")]
-        public async Task<ActionResult<AppUser>> GetUsersByUsername(string username)
+        public async Task<ActionResult<MemberDto>> GetUsersByUsername(string username)
         {
           // return _context.Users.FindAsync(id);
         // await _context.Users.Include(p=>p.Photos).Where(x=>x.Id==id).FirstOrDefaultAsync(x=>x.Id==id);
-            return await _repository.GetUserByUsernameAsync(username);
+            //var user = await _repository.GetUserByUsernameAsync(username);
+            var user = await _repository.GetMemberAsync(username);
+            return user;
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<AppUser>> DeleteCommand(int id)
-        {
-            var UserModel = _context.Users.FindAsync(id);
-           
-            //_context.Remove(UserModel);
-
-            return await UserModel;
-        }
-        
+      
 
     }
 }
