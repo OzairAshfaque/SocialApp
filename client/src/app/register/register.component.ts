@@ -10,17 +10,20 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  @Input() StringFromHomeComp? : string;
   @Input() UserFromHomeComponents :any;
   @Output() cancelRegister = new EventEmitter();
+  @Output() OutTestVar? : string;
   model : any ={};
   loggedIn : boolean = false;
   constructor(public accountService:AccountService, private toastr : ToastrService) { }
 
   ngOnInit(): void {
+    //this.OutTestVar = this.cancelRegister
   }
 
   register(){
-    //console.log(this.model);
+    console.log(this.model);
     this.accountService.register(this.model).subscribe(response=>
       {
         console.log(response);

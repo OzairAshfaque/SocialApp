@@ -26,14 +26,12 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [AllowAnonymous]
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
             
-        //    var users = await _repository.GetUsersAsync();
-        //    var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
-           var user = await _repository.GetMembersAsync();
+             var user = await _repository.GetMembersAsync();
           
 
             return Ok(user);
@@ -45,10 +43,7 @@ namespace API.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUsersByUsername(string username)
         {
-          // return _context.Users.FindAsync(id);
-        // await _context.Users.Include(p=>p.Photos).Where(x=>x.Id==id).FirstOrDefaultAsync(x=>x.Id==id);
-            //var user = await _repository.GetUserByUsernameAsync(username);
-            
+
             return  await _repository.GetMemberAsync(username);
         }
 

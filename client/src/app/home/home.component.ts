@@ -10,12 +10,14 @@ import { AccountService } from '../_services/account.service';
 export class HomeComponent implements OnInit {
   registerMode = false;
   users :any;
+  testVar? : string ;
 
 
   constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
-    this.getUsers();
+  //  this.getUsers();
+    this.testVar = "I am the value coming here."
   }
 
   registerToggle(){
