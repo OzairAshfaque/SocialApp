@@ -30,7 +30,7 @@ export class NavComponent implements OnInit {
     //console.log(this.model);
      this.accountService.login(this.model).subscribe(response=>
       {
-        console.log(response);
+        console.log(this.router.navigateByUrl('/members'));
         this.router.navigateByUrl('/members');
         
        // this.loggedIn = true;
