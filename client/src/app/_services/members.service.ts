@@ -9,6 +9,7 @@ import { Member } from '../_models/member';
 })
 export class MembersService {
   BaseUrl = environment.apiUrl;
+  
 
   constructor(private http : HttpClient) { }
   getMembers(){
@@ -17,5 +18,9 @@ export class MembersService {
 
   getMember(username :string){
     return this.http.get<Member>(this.BaseUrl + 'users/' + username)
+  }
+
+  updateMember(member:Member){
+    return this.http.put(this.BaseUrl+'users',member);
   }
 }
